@@ -1,6 +1,9 @@
 package se.yrgo.libraryapp.validators;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,5 +16,30 @@ public class UsernameTest {
     @Test
     void incorrectUsername() {
         assertThat(Username.validate("name with space")).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"bo", "bo sse", "bosse_bo!"})
+    void incorrectUsernames(String input) {
+        assertThat(Username.validate(input)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"bosse", "b0b0", "bo@orm", "bobo_boy"})
+    void correctUsernames(String input) {
+        assertThat(Username.validate(input)).isTrue();
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    @ValueSource(strings = {"\t", "\n"})
+    void emptyUsernames(String input) {
+        assertThat(Username.validate(input)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"bosse0", "bosse1", "bosse2", "bosse3", "bosse4", "bosse5", "bosse6", "bosse7", "bosse8", "bosse9"})
+    void validateAllDigit(String input) {
+        assertThat(Username.validate(input)).isTrue();
     }
 }
