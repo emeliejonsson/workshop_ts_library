@@ -25,7 +25,7 @@ public class UsernameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"bosse", "b0b0", "bo@orm", "bobo_boy"})
+    @ValueSource(strings = {"bosse", "b0b0", "bo@orm", "bobo_boy", "bo-bo"})
     void correctUsernames(String input) {
         assertThat(Username.validate(input)).isTrue();
     }
