@@ -11,7 +11,7 @@ public class UtilsTest {
     //onlyLettersAndWhiteSpace
 
     @Test
-    void showsOnlyLowercase() {
+    void convertToLowercase() {
         assertThat(Utils.onlyLettersAndWhitespace("BO JONSSON")).isEqualTo("bo jonsson");
     }
 
@@ -21,14 +21,14 @@ public class UtilsTest {
     }
 
     @Test
-    void emptyString() {
+    void returnEmptyStringForEmptyInput() {
         assertThat(Utils.onlyLettersAndWhitespace("")).isEmpty();
     }
 
     // cleanAndUntleet
 
     @Test
-    void unleetName() {
+    void convertsLeetNameToPlainName() {
         assertThat(Utils.cleanAndUnLeet("B0 J0N550N")).isEqualTo("bo jonsson");
     }
 
@@ -42,12 +42,12 @@ public class UtilsTest {
             "7, t",
             "8, b",
             "0, o"})
-    void leetDigitsToLetter(String enteredDigit, String expectedLetter) {
+    void convertLeetDigitToLetter(String enteredDigit, String expectedLetter) {
         assertThat(Utils.cleanAndUnLeet(enteredDigit)).isEqualTo(expectedLetter);
     }
 
     @Test
-    void notLeetDigitsRemoved() {
+    void removesDigitsWithNoLeetMapping() {
         assertThat(Utils.cleanAndUnLeet("Bo22")).isEqualTo("bo");
     }
 

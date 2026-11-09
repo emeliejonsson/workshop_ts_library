@@ -1,31 +1,28 @@
 package se.yrgo.libraryapp.validators;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RealNameTest {
 
     @Test
-    void acceptsName() {
+    void acceptsNameWithoutBadWords() {
         assertThat(RealName.validate("Bo Jonsson")).isTrue();
     }
 
     @Test
-    void rejectsFirstBadWord() {
-        assertThat(RealName.validate("Frick Bo")).isFalse();
+    void rejectsNameWithBadWordAsFirstName() {
+        assertThat(RealName.validate("Badword Bo")).isFalse();
     }
 
     @Test
-    void rejectsSecondBadWord() {
+    void rejectsNameWithBadWordAsLastName() {
         assertThat(RealName.validate("Bo Frick")).isFalse();
     }
 
     @Test
-    void rejectsLeetBadWord() {
+    void rejectsNameWithLeetBadWord() {
         assertThat(RealName.validate("Bo D4MN")).isFalse();
     }
 
