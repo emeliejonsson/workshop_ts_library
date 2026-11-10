@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V1.0.1655380356__roles.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V1.0.1656415382__books.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V1.0.1656581560__make_user_unique.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V1.0.1656939211__realname.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/test/resources/db/migration/V1.0.1655380357__roles_test_data.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/test/resources/db/migration/V1.0.1656415572__books_test_data.sql" dialect="MySQL" />
+  </component>
+</project>
