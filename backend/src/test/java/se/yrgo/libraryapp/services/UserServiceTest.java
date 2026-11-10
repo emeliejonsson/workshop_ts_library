@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.pac4j.core.credentials.password.PasswordEncoder;
 import se.yrgo.libraryapp.dao.UserDao;
 import se.yrgo.libraryapp.entities.LoginInfo;
 import se.yrgo.libraryapp.entities.UserId;
@@ -19,16 +20,21 @@ public class UserServiceTest {
     private UserDao userDao;
 
     @Test
+    @SuppressWarnings("deprecation")
     void correctLogin() {
         final String userId = "1";
         final UserId id = UserId.of(userId);
         final String username = "testuser";
         final String password = "password";
         final String passwordHash =
-                "$argon2i$v=19$m=16,t=2,p=1$QldXU09Sc2dzOWdUalBKQw$LgKb6x4usOpDLTlXCBVhxA";
+                "password";
         final LoginInfo info = new LoginInfo(id, passwordHash);
+        final PasswordEncoder encoder =
+                (PasswordEncoder) org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance();
+
         when(userDao.getLoginInfo(username)).thenReturn(Optional.of(info));
-        UserService userService = new UserService(userDao);
+        
+        UserService userService = new UserService(userDao, encoder);
         assertThat(userService.validate(username,
                 password)).isEqualTo(Optional.of(id));
     }
