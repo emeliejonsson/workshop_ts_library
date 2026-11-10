@@ -29,12 +29,11 @@ public class RealNameTest {
     void rejectsNameWithLeetBadWord() { assertThat(RealName.validate("Bo D4MN")).isFalse(); }
 
 
-    //test the whole file of bad words and rejects them
+    //read the whole file of bad words
     static Stream<String> badWordsFromFile() {
         InputStream is = RealName.class.getClassLoader().getResourceAsStream("bad_words.txt");
-        BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)); {
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             return br.lines();
-        }
     }
 
     @ParameterizedTest
