@@ -36,4 +36,11 @@ public class UserService {
         String passwordHash = encoder.encode(password);
         return userDao.register(username, realname, passwordHash);
     }
+
+    public boolean isNameAvailable(String name) {
+        if (name == null || name.trim().length() < 3) {
+            return false;
+        }
+        return userDao.isNameAvailable(name);
+    }
 }
