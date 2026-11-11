@@ -98,4 +98,29 @@ public class UserServiceTest {
 
         assertThat(userService.register(username, realname, password)).isTrue();
     }
+
+    // isNameAvailable
+    @Test
+    void isNameAvailableTooShortUsername() {
+        assertThat(userService.isNameAvailable("bo")).isFalse();
+        verifyNoInteractions(userDao);
+    }
+
+    @Test
+    void isNameAvailableTooShortUsernameWithSpace() {
+        assertThat(userService.isNameAvailable("   bo   ")).isFalse();
+        verifyNoInteractions(userDao);
+    }
+
+    @Test
+    void isNameAvailableFreeUsername() {
+        when(userDao.isNameAvailable("Bo_Bo")).thenReturn(true);
+        assertThat(userService.isNameAvailable("Bo_Bo")).isTrue();
+    }
+
+    @Test
+    void isNameAvailableTakenUsername() {
+        when(userDao.isNameAvailable("Bo_Bo")).thenReturn(false);
+        assertThat(userService.isNameAvailable("Bo_Bo")).isFalse();
+    }
 }
