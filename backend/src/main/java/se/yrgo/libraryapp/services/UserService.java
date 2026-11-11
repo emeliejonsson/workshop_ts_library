@@ -30,5 +30,10 @@ public class UserService {
         }
 
         return Optional.of(loginInfo.getUserId());
-    }        
+    }
+
+    public boolean register(String username, String realname, String password) {
+        String passwordHash = encoder.encode(password);
+        return userDao.register(username, realname, passwordHash);
+    }
 }

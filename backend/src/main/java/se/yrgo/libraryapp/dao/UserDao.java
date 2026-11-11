@@ -58,10 +58,7 @@ public class UserDao {
         return Optional.empty();
     }
 
-    public boolean register(String name, String realname, String password) {
-        Argon2PasswordEncoder encoder = new Argon2PasswordEncoder();
-        String passwordHash = encoder.encode(password);
-
+    public boolean register(String name, String realname, String passwordHash) {
         // handle names like Ian O'Toole
         realname = realname.replace("'", "\\'");
 
