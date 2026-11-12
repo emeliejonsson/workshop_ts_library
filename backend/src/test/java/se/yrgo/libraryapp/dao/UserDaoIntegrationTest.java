@@ -35,7 +35,7 @@ public class UserDaoIntegrationTest {
 
     //get
     @Test
-    void getUserById() {
+    void getExistingUser() {
 // this data comes from the test migration files
         final String username = "test";
         final UserId userId = UserId.of(1);
@@ -43,6 +43,38 @@ public class UserDaoIntegrationTest {
         assertThat(maybeUser).isPresent();
         assertThat(maybeUser.get().getName()).isEqualTo(username);
         assertThat(maybeUser.get().getId()).isEqualTo(userId);
+    }
+
+    @Test
+    void getUnknownUser() {
+        String unknownId = "0000";
+        Optional<User> user = userDao.get(unknownId);
+        assertThat(user).isEmpty();
+    }
+
+    @Test
+    void getLoginInfoForUnknownUser() {
+        String unknownUsername = "unknown_bosse";
+        Optional<LoginInfo> loginInfo = userDao.getLoginInfo(unknownUsername);
+        assertThat(loginInfo).isEmpty();
+    }
+
+    @Test
+    void getUserWithSqlInjection() {
+        boolean registered = userDao.register("inject_get", "Inject Get", "hashed_password");
+        assertThat(registered).isTrue();
+
+        Optional<User> user = userDao.get("0' OR '1'='1");
+        assertThat(user).isEmpty();
+    }
+
+    @Test
+    void getLoginInfoWithSqlInjection() {
+        boolean registered = userDao.register("inject_login", "Inject Login", "hashed_password");
+        assertThat(registered).isTrue();
+
+        Optional<LoginInfo> loginInfo = userDao.getLoginInfo("' OR '1'='1");
+        assertThat(loginInfo).isEmpty();
     }
 
     //register
@@ -63,7 +95,7 @@ public class UserDaoIntegrationTest {
 
 
     @Test
-    void registerRealNameWithApostropheCorrectly() {
+    void registerUserWithApostropheInRealname() {
         boolean registerWithApostrophe = userDao.register("Ian1", "Ian O'Toole", "hashed_password");
         assertThat(registerWithApostrophe).isTrue();
 
@@ -77,7 +109,7 @@ public class UserDaoIntegrationTest {
     }
 
     @Test
-    void registerUserWithAlreadyTakenName() {
+    void registerUserWithTakenName() {
         boolean firstRegisteredUser = userDao.register("first_user", "Bo First", "hashed_password");
         assertThat(firstRegisteredUser).isTrue();
 
@@ -87,13 +119,13 @@ public class UserDaoIntegrationTest {
 
     //isNameAvailable
     @Test
-    void isNameAvailableReturnsTrueWhenNameIsFree() {
+    void isNameAvailableWithFreeName() {
         boolean freeName = userDao.isNameAvailable("b0b0");
         assertThat(freeName).isTrue();
     }
 
     @Test
-    void isNameAvailableReturnsFalseWhenNameIsTaken() {
+    void isNameAvailableWithTakenName() {
         boolean registered = userDao.register("already_taken", "Morgan Takenman", "hashed_password");
         assertThat(registered).isTrue();
 
