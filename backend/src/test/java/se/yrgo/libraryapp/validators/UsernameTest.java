@@ -6,7 +6,6 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 public class UsernameTest {
     @Test
@@ -33,9 +32,7 @@ public class UsernameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"bobo", "boss"})
-    void acceptsUsernameThatAreFourCharsLong(String input) {
-        assertThat(Username.validate(input)).isTrue();
-    }
+    void acceptsUsernameThatAreFourCharsLong(String input) { assertThat(Username.validate(input)).isTrue(); }
 
     @ParameterizedTest
     @ValueSource(strings = {"bosse", "b0b0", "bo@orm", "bobo_boy", "bo-bo"})

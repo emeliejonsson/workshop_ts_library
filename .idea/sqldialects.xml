@@ -7,5 +7,6 @@
     <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/migration/V1.0.1656939211__realname.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/backend/src/test/resources/db/migration/V1.0.1655380357__roles_test_data.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/backend/src/test/resources/db/migration/V1.0.1656415572__books_test_data.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/test/resources/db/migration/V1.0.1656939220__realname.sql" dialect="MySQL" />
   </component>
 </project>
