@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/backend/src/main/java/se/yrgo/libraryapp/dao/UserDao.java" value="48858663-3217-4af7-9022-0329c8f35d46" />
+    <file url="file://$PROJECT_DIR$/backend/src/test/resources/db/migration/V1.0.1656939220__realname.sql" value="48858663-3217-4af7-9022-0329c8f35d46" />
+  </component>
+</project>
