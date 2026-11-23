@@ -33,6 +33,11 @@ public class UtilsPropertyTest {
         }
     }
 
+    @Test
+    void onlyLettersAndWhiteSpaceHandlesIDot() {
+        assertThat(Utils.onlyLettersAndWhitespace("\u0130")).isEqualTo("i");
+    }
+
     @Property
     void onlyLettersAndWhitespaceReturnsLowercase(@ForAll String input) {
         String result = Utils.onlyLettersAndWhitespace(input);
