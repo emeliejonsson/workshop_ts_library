@@ -3,26 +3,9 @@ package se.yrgo.libraryapp.validators;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UtilsPropertyTest {
-
-    //egenskap - ett påstående som ska vara sant för alla giltiga indata
-    //@Property ersätter @Test - säger att testet ska köras flera gånger
-    //@ForALl = Jqwik genererar slumpmässiga värden för den här parametern
-
-    //För onlyLettersAndWhitespace() kan du ju helt anropa den med slumpmässig
-    // data från jqwik och
-    //kontrollera genom att loopa genom resultatsträngen att ingenting
-    // är annat än små bokstäver och whitespace.
-    //
-    //För cleanAndUnLeet() kan du t.ex. pröva med att skapa en @Provider
-    // som skapar textsträngar med leet-code i som sedan inte skall vara kvar.
-    //
-    //Fundera över vilka tester som är lämpliga för dessa två metoder
-    // och implementera dem. Hittar du några buggar meddelar du mig och rättar dem.
 
     //onlyLettersAndWhitespace
     @Property
@@ -33,19 +16,20 @@ public class UtilsPropertyTest {
         }
     }
 
-    @Test
-    void onlyLettersAndWhiteSpaceHandlesIDot() {
-        assertThat(Utils.onlyLettersAndWhitespace("\u0130")).isEqualTo("i");
-    }
 
     @Property
-    void onlyLettersAndWhitespaceReturnsLowercase(@ForAll String input) {
+    void resultIsLowercase(@ForAll String input) {
         String result = Utils.onlyLettersAndWhitespace(input);
         assertThat(result).isEqualTo(result.toLowerCase());
     }
 
+    @Test
+    void dottedIConvertsToPlainI() {
+        assertThat(Utils.onlyLettersAndWhitespace("\u0130")).isEqualTo("i");
+    }
+
     @Property
-    void resultIsTheSame(@ForAll String input) {
+    void lettersRunTwiceGivesSameResult(@ForAll String input) {
         String result = Utils.onlyLettersAndWhitespace(input);
         assertThat(Utils.onlyLettersAndWhitespace(result)).isEqualTo(result);
     }
@@ -74,7 +58,20 @@ public class UtilsPropertyTest {
         assertThat(result).matches("[a-z]*");
     }
 
+    @Test
+    void leetDigitsAreReplacedWithCorrectLetters() {
+        assertThat(Utils.cleanAndUnLeet("01345678")).isEqualTo("oleasbtb");
+    }
 
+    @Test
+    void nonLettersAreRemoved() {
+        assertThat(Utils.cleanAndUnLeet("b0b0!")).isEqualTo("bobo");
+    }
 
+    @Property
+    void cleanRunTwiceGivesSameReslt(@ForAll String input) {
+        String result = Utils.cleanAndUnLeet(input);
+        assertThat(Utils.cleanAndUnLeet(result)).isEqualTo(result);
+    }
 
 }
